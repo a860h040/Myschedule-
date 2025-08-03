@@ -1,169 +1,381 @@
-<!-- Combined Clock In/Out and Weekly Summary Page -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Clock Tracker</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendar with Task Magnification</title>
   <style>
-    :root {
-      --primary: #007acc;
-      --accent: #d9eaff;
-      --bg: #fdfefe;
-      --glass: rgba(255,255,255,0.2);
-      --border-glass: rgba(255,255,255,0.4);
-      --text: #333;
-    }
-    * { box-sizing: border-box; }
     body {
+      font-family: 'Arial', sans-serif;
       margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: radial-gradient(circle at 40% 40%, var(--bg), #e0f4ff);
-      color: var(--text);
-      min-height: 100vh;
+      padding: 0;
+      background-image: url('your-background-image.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    nav {
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 10px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 10000;
+    }
+
+    nav button {
+      padding: 10px 20px;
+      margin: 5px;
+      font-weight: bold;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    nav button:hover {
+      background-color: #45a049;
+    }
+
+    #calendarContainer {
+      width: 100%;
+      max-width: 800px;
+      margin: 20px auto;
+      background-color: transparent;
+      border-radius: 8px;
+      box-shadow: none;
+      overflow: hidden;
+    }
+
+    #monthHeader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 10px;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+
+    #prevMonth, #nextMonth {
+      background-color: rgba(255, 255, 255, 0.3);
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: background-color 0.3s;
+    }
+
+    #prevMonth:hover, #nextMonth:hover {
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    #monthTitle {
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      flex-grow: 1;
+    }
+
+    #calendarGrid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .calendar-week {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .weekdays, .weekends {
+      display: grid;
+      gap: 5px;
+    }
+
+    .weekdays {
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    .weekends {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .calendar-day {
+      border: 1px solid #ddd;
+      padding: 8.5px;
+      min-height: 85px;
+      position: relative;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      transition: transform 0.2s;
+      text-align: center;
+      font-size: 10px;
+    }
+
+    .calendar-day.weekend {
+      background-color: #e0f2f1;
+    }
+
+    .calendar-day .date {
+      font-weight: bold;
+      margin-bottom: 5px;
+      display: block;
+      font-size: 16px;
+    }
+
+    .calendar-day .events {
+      margin-top: 10px;
+    }
+
+    .event-title {
+      font-weight: bold;
+      font-size: 12px;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .event-title.blue { color: blue; }
+    .event-title.red { color: red; }
+
+    .event-title:hover {
+      color: #4CAF50;
+    }
+
+    #taskMagnify {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 9999;
+      overflow: auto;
       padding: 20px;
+      box-sizing: border-box;
       text-align: center;
     }
-    .form-section, .weekly-section {
-      background: var(--glass);
-      border: 1px solid var(--border-glass);
-      border-radius: 40px;
-      backdrop-filter: blur(60px);
-      padding: 40px;
+
+    #magnifyContent {
+      background-color: #fff;
+      padding: 20px;
+      border: 1px solid #ddd;
+      width: 100%;
       max-width: 600px;
-      margin: 20px auto;
-      box-shadow: 0 60px 180px rgba(0,0,0,0.6), inset 0 0 50px rgba(255,255,255,0.1);
+      margin: auto;
+      position: relative;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
     }
-    .button {
-      background: var(--primary);
-      color: white;
-      padding: 20px 36px;
-      border: none;
-      border-radius: 30px;
-      font-size: 16px;
-      margin: 10px;
+
+    #magnifyClose {
+      color: #888;
+      position: absolute;
+      top: 10px; right: 10px;
+      font-size: 28px;
       cursor: pointer;
-      box-shadow: 0 20px 60px rgba(0,122,204,0.6);
-      transition: 0.3s ease;
+      transition: color 0.3s;
     }
-    .button:hover {
-      background: #005fa3;
-      transform: scale(1.05);
-      box-shadow: 0 30px 90px rgba(0,122,204,0.9);
+
+    #magnifyClose:hover {
+      color: #555;
     }
-    #clockStatus {
-      margin-top: 20px;
-      font-weight: 600;
-      font-size: 16px;
-      color: #444;
-    }
-    .week-line {
-      margin-bottom: 10px;
-    }
-    .week-line span {
-      color: red;
+
+    #magnifyTitle {
+      font-size: 20px;
       font-weight: bold;
+      margin-bottom: 10px;
+      color: #333;
     }
-    .toggle-button {
-      margin-top: 30px;
-      font-size: 14px;
-      cursor: pointer;
-      background: none;
-      color: var(--primary);
-      text-decoration: underline;
-      border: none;
+
+    .task-list {
+      margin-top: 20px;
+      text-align: left;
     }
+
+    .task-item {
+      margin-bottom: 10px;
+      padding: 10px;
+      background-color: #f2f2f2;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s;
+      text-align: left;
+    }
+
+    .task-item:hover {
+      transform: scale(1.02);
+    }
+
+    .task-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+
+    .task-time {
+      font-weight: bold;
+      margin-right: 10px;
+      color: #4CAF50;
+    }
+
+    .task-name.blue { color: blue; }
+    .task-name.red { color: red; }
   </style>
 </head>
 <body>
-  <div class="form-section" id="clockSection">
-    <h1>Clock In / Clock Out</h1>
-    <button class="button" onclick="recordClock('Clock In')">Clock In</button>
-    <button class="button" onclick="recordClock('Clock Out')">Clock Out</button>
-    <p id="clockStatus">Ready to clock in or out.</p>
-    <button class="toggle-button" onclick="toggleSections()">📊 View Weekly Summary</button>
+
+  <!-- Navigation buttons -->
+  <nav>
+    <button onclick="location.href='page1.html'">Page 1</button>
+    <button onclick="location.href='page2.html'">Page 2</button>
+    <button onclick="location.href='page3.html'">Page 3</button>
+  </nav>
+
+  <div id="calendarContainer">
+    <div id="monthHeader">
+      <button id="prevMonth">&lt;</button>
+      <div id="monthTitle"></div>
+      <button id="nextMonth">&gt;</button>
+    </div>
+    <div id="calendarGrid"></div>
   </div>
 
-  <div class="weekly-section" id="weeklySection" style="display:none;">
-    <h2>📊 Weekly Summary</h2>
-    <div id="weekly">Loading...</div>
-    <button class="toggle-button" onclick="toggleSections()">🔁 Back to Clock In/Out</button>
+  <div id="taskMagnify">
+    <div id="magnifyContent">
+      <div id="magnifyClose">&times;</div>
+      <div id="magnifyTitle"></div>
+      <div id="magnifyTasks" class="task-list"></div>
+    </div>
   </div>
 
   <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbzI18q0TwBmZMJ7SmW449VVQuWFgiyM_QocAZA0_Mf-Ax00Sr4ZKXxbaTpWrhUlum4R6Q/exec";
+    document.addEventListener('DOMContentLoaded', function () {
+      let currentDate = new Date();
+      let year = currentDate.getFullYear();
+      let month = currentDate.getMonth();
 
-    function recordClock(action) {
-      const clockStatus = document.getElementById("clockStatus");
-      clockStatus.textContent = "Sending...";
-      fetch(scriptURL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action })
-      })
-      .then(() => {
-        const time = new Date().toLocaleString();
-        clockStatus.textContent = `${action} recorded at ${time}.`;
-      })
-      .catch(() => {
-        clockStatus.textContent = "❌ Failed to record.";
-      });
-    }
+      function renderCalendar() {
+        fetch('https://script.google.com/macros/s/AKfycbypdyNMt_WT-9vZ_ZXdZpY7q3m10hKj30-Q5mOnjAN5vkukVrDdgg2WK8mJZJCT21K1/exec')
+          .then(response => response.json())
+          .then(data => {
+            const container = document.getElementById('calendarGrid');
+            const monthTitle = document.getElementById('monthTitle');
 
-    function toggleSections() {
-      const clock = document.getElementById("clockSection");
-      const weekly = document.getElementById("weeklySection");
-      clock.style.display = clock.style.display === 'none' ? 'block' : 'none';
-      weekly.style.display = weekly.style.display === 'none' ? 'block' : 'none';
-      if (weekly.style.display === 'block') loadWeeklyHours();
-    }
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+              "July", "August", "September", "October", "November", "December"];
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const firstDay = new Date(year, month, 1).getDay();
+            const firstDayAdjusted = (firstDay === 0) ? 6 : firstDay - 1;
 
-    function formatDateShort(dateStr) {
-      const d = new Date(dateStr);
-      return `${d.getMonth() + 1}/${d.getDate()}`;
-    }
+            monthTitle.textContent = `${monthNames[month]} ${year}`;
 
-    async function loadWeeklyHours() {
-      try {
-        const response = await fetch(scriptURL);
-        const weeklyData = await response.json();
-        const weeklyContainer = document.getElementById('weekly');
-        weeklyContainer.innerHTML = '';
+            let days = [];
+            for (let i = 0; i < firstDayAdjusted; i++) {
+              days.push('<div class="calendar-day empty"></div>');
+            }
 
-        const now = new Date();
-        const thisSunday = new Date(now);
-        thisSunday.setDate(now.getDate() - now.getDay());
-        thisSunday.setHours(0, 0, 0, 0);
-        const thisWeekKey = thisSunday.toISOString().split('T')[0];
+            for (let day = 1; day <= daysInMonth; day++) {
+              const dayOfWeek = (firstDayAdjusted + day - 1) % 7;
+              const weekendClass = (dayOfWeek === 5 || dayOfWeek === 6) ? ' weekend' : '';
 
-        const sortedWeeks = Object.keys(weeklyData)
-          .sort((a, b) => new Date(b) - new Date(a))
-          .slice(0, 4);
+              let dayHtml = `<div class="calendar-day${weekendClass}" data-day="${day}">
+                <div class="date">${day}</div>
+                <div class="events">`;
 
-        sortedWeeks.forEach((weekKey) => {
-          const hoursFloat = weeklyData[weekKey];
-          const hours = Math.floor(hoursFloat);
-          const minutes = Math.round((hoursFloat - hours) * 60);
+              const dayTasks = data.filter(row => {
+                const eventDate = new Date(row.columnD);
+                return eventDate.getDate() === day &&
+                       eventDate.getMonth() === month &&
+                       eventDate.getFullYear() === year;
+              });
 
-          const label = weekKey === thisWeekKey
-            ? `This week (${formatDateShort(weekKey)})`
-            : `Week of (${formatDateShort(weekKey)})`;
+              dayTasks.forEach(task => {
+                let eventClass = '';
+                if (task.columnC.startsWith('#')) eventClass = 'blue';
+                else if (task.columnC.startsWith('*')) eventClass = 'red';
 
-          weeklyContainer.innerHTML += `
-            <div class="week-line">${label}: <span>${hours} hours ${minutes} minutes</span></div>
-          `;
+                dayHtml += `<div class="event">
+                  <div class="event-title ${eventClass}" data-tasks='${JSON.stringify(dayTasks)}'>
+                    ${task.columnC}
+                  </div>
+                </div>`;
+              });
+
+              dayHtml += '</div></div>';
+              days.push(dayHtml);
+            }
+
+            let weeks = [];
+            while (days.length > 0) {
+              const weekdays = days.splice(0, 5);
+              const weekends = days.splice(0, 2);
+
+              weeks.push('<div class="calendar-week">');
+              weeks.push(`<div class="weekdays">${weekdays.join('')}</div>`);
+              weeks.push(`<div class="weekends">${weekends.join('')}</div>`);
+              weeks.push('</div>');
+            }
+
+            container.innerHTML = weeks.join('');
+
+            document.querySelectorAll('.event-title').forEach(title => {
+              title.addEventListener('click', function () {
+                const tasks = JSON.parse(this.getAttribute('data-tasks'));
+                magnifyTasks(this.parentNode.parentNode.getAttribute('data-day'), tasks);
+              });
+            });
+          })
+          .catch(err => console.error('Error:', err));
+      }
+
+      function magnifyTasks(day, tasks) {
+        const magnifyTitle = document.getElementById('magnifyTitle');
+        const magnifyTasks = document.getElementById('magnifyTasks');
+        const taskMagnify = document.getElementById('taskMagnify');
+
+        magnifyTitle.textContent = `Tasks for ${day}`;
+        magnifyTasks.innerHTML = '';
+
+        tasks.forEach(task => {
+          const textColorClass = task.columnC.startsWith('#') ? 'blue' :
+                                 task.columnC.startsWith('*') ? 'red' : '';
+
+          magnifyTasks.innerHTML += `
+            <div class="task-item">
+              <div class="task-info">
+                <span class="task-time">${task.columnB}</span>
+                <span class="task-name ${textColorClass}">${task.columnC}</span>
+              </div>
+            </div>`;
         });
 
-        if (sortedWeeks.length === 0) {
-          weeklyContainer.innerHTML = 'No valid shifts recorded.';
-        }
-      } catch (err) {
-        document.getElementById('weekly').textContent = '❌ Failed to load weekly hours.';
-        console.error(err);
+        taskMagnify.style.display = 'block';
       }
-    }
+
+      document.getElementById('magnifyClose').addEventListener('click', () => {
+        document.getElementById('taskMagnify').style.display = 'none';
+      });
+
+      document.getElementById('prevMonth').addEventListener('click', () => {
+        month--;
+        if (month < 0) { month = 11; year--; }
+        renderCalendar();
+      });
+
+      document.getElementById('nextMonth').addEventListener('click', () => {
+        month++;
+        if (month > 11) { month = 0; year++; }
+        renderCalendar();
+      });
+
+      renderCalendar();
+    });
   </script>
 </body>
 </html>
