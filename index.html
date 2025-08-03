@@ -6,13 +6,15 @@
   <title>Calendar with Task Magnification</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
       margin: 0;
-      padding: 0;
-      background-image: url('bg2.jpg');
-      background-size: cover;
-      background-position: center;
-    }
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background-image: url('bg1');
+  background-size: cover;           /* Stretch to fill screen */
+  background-repeat: no-repeat;     /* Prevent duplicates */
+  background-position: center;      /* Center image */
+  background-attachment: fixed;     /* Stay fixed on scroll */
+}
 
     nav {
       background-color: rgba(255, 255, 255, 0.8);
