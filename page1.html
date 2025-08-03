@@ -44,7 +44,7 @@
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       width: 100%;
       max-width: 500px;
-      margin: 80px auto; /* Add top spacing to account for nav */
+      margin: 80px auto;
     }
 
     h4 {
@@ -73,6 +73,13 @@
     input[type="submit"]:hover {
       background-color: #218838;
     }
+
+    .success-message {
+      text-align: center;
+      color: green;
+      font-weight: bold;
+      margin-top: 15px;
+    }
   </style>
 </head>
 <body>
@@ -85,14 +92,20 @@
   </nav>
 
   <div class="container">
-    <form method="post" action="https://script.google.com/macros/s/AKfycbyG9YVu54CMjBzHUTddcQ5-EX_qSXE1bgo9fpvuaWPWKZbWUs6mYRwxWIjhoTa19Lgk/exec" name="contact-form">
+    <form method="post" action="https://script.google.com/macros/s/AKfycbyG9YVu54CMjBzHUTddcQ5-EX_qSXE1bgo9fpvuaWPWKZbWUs6mYRwxWIjhoTa19Lgk/exec" name="contact-form" target="hidden_iframe" onsubmit="submitted=true;">
       <h4>My Scheduler</h4>
       <input type="text" name="Event" placeholder="Event" required>
       <input type="text" name="12" placeholder="Date" required>
       <textarea name="Time" rows="1" placeholder="Time" required></textarea>
       <input type="submit" value="Submit" id="submit">
+      <div class="success-message" id="msg" style="display:none;">Form submitted successfully!</div>
     </form>
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted){document.getElementById('msg').style.display='block'; document.forms['contact-form'].reset(); submitted=false;}"></iframe>
   </div>
+
+  <script>
+    let submitted = false;
+  </script>
 
 </body>
 </html>
