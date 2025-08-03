@@ -25,6 +25,34 @@
       padding: 20px;
       text-align: center;
     }
+
+    /* Navigation Buttons */
+    nav {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 10px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      margin: -20px -20px 20px -20px; /* offset body padding */
+    }
+
+    nav button {
+      padding: 10px 20px;
+      margin: 5px;
+      font-weight: bold;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    nav button:hover {
+      background-color: #005fa3;
+    }
+
     .form-section, .weekly-section {
       background: var(--glass);
       border: 1px solid var(--border-glass);
@@ -35,6 +63,7 @@
       margin: 20px auto;
       box-shadow: 0 60px 180px rgba(0,0,0,0.6), inset 0 0 50px rgba(255,255,255,0.1);
     }
+
     .button {
       background: var(--primary);
       color: white;
@@ -47,24 +76,29 @@
       box-shadow: 0 20px 60px rgba(0,122,204,0.6);
       transition: 0.3s ease;
     }
+
     .button:hover {
       background: #005fa3;
       transform: scale(1.05);
       box-shadow: 0 30px 90px rgba(0,122,204,0.9);
     }
+
     #clockStatus {
       margin-top: 20px;
       font-weight: 600;
       font-size: 16px;
       color: #444;
     }
+
     .week-line {
       margin-bottom: 10px;
     }
+
     .week-line span {
       color: red;
       font-weight: bold;
     }
+
     .toggle-button {
       margin-top: 30px;
       font-size: 14px;
@@ -77,13 +111,14 @@
   </style>
 </head>
 <body>
+
   <!-- Navigation Buttons -->
   <nav>
     <button onclick="location.href='index.html'">Calendar</button>
     <button onclick="location.href='page1.html'">Form</button>
     <button onclick="location.href='page2.html'">Daily Tasks</button>
   </nav>
-  
+
   <div class="form-section" id="clockSection">
     <h1>Clock In / Clock Out</h1>
     <button class="button" onclick="recordClock('Clock In')">Clock In</button>
