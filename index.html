@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -17,223 +18,225 @@
   background-attachment: fixed;
 }
 
-    nav {
-      background-color: rgba(255, 255, 255, 0.8);
-      padding: 10px;
-      text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 10000;
-    }
+nav {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 10000;
+}
 
-    nav button {
-      padding: 10px 20px;
-      margin: 5px;
-      font-weight: bold;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
+nav button {
+  padding: 10px 20px;
+  margin: 5px;
+  font-weight: bold;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
-    nav button:hover {
-      background-color: #45a049;
-    }
+nav button:hover {
+  background-color: #45a049;
+}
 
-    #calendarContainer {
-      width: 100%;
-      max-width: 800px;
-      margin: 20px auto;
-      background-color: transparent;
-      border-radius: 8px;
-      box-shadow: none;
-      overflow: hidden;
-    }
+#calendarContainer {
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto;
+  background-color: transparent;
+  border-radius: 8px;
+  box-shadow: none;
+  overflow: hidden;
+}
 
-    #monthHeader {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: #4CAF50;
-      color: #fff;
-      padding: 10px;
-      border-top-left-radius: 8px;
-      border-top-right-radius: 8px;
-    }
+#monthHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 10px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
 
-    #prevMonth, #nextMonth {
-      background-color: rgba(255, 255, 255, 0.3);
-      color: #fff;
-      border: none;
-      padding: 10px 15px;
-      cursor: pointer;
-      font-size: 18px;
-      transition: background-color 0.3s;
-    }
+#prevMonth, #nextMonth {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s;
+}
 
-    #prevMonth:hover, #nextMonth:hover {
-      background-color: rgba(255, 255, 255, 0.5);
-    }
+#prevMonth:hover, #nextMonth:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
 
-    #monthTitle {
-      font-size: 20px;
-      font-weight: bold;
-      text-align: center;
-      flex-grow: 1;
-    }
+#monthTitle {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  flex-grow: 1;
+}
 
-    #calendarGrid {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+#calendarGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
-    .calendar-week {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+.calendar-week {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
-    .weekdays, .weekends {
-      display: grid;
-      gap: 5px;
-    }
+.weekdays, .weekends {
+  display: grid;
+  gap: 5px;
+}
 
-    .weekdays {
-      grid-template-columns: repeat(5, 1fr);
-    }
+.weekdays {
+  grid-template-columns: repeat(5, 1fr);
+}
 
-    .weekends {
-      grid-template-columns: repeat(2, 1fr);
-    }
+.weekends {
+  grid-template-columns: repeat(2, 1fr);
+}
 
-    .calendar-day {
-      border: 1px solid #ddd;
-      padding: 8.5px;
-      min-height: 85px;
-      position: relative;
-      background-color: #fff;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
-      transition: transform 0.2s;
-      text-align: center;
-      font-size: 10px;
-    }
+.calendar-day {
+  border: 1px solid #ddd;
+  padding: 8.5px;
+  min-height: 85px;
+  position: relative;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  transition: transform 0.2s;
+  text-align: center;
+  font-size: 10px;
+}
 
-    .calendar-day.weekend {
-      background-color: #e0f2f1;
-    }
+.calendar-day.weekend {
+  background-color: #e0f2f1;
+}
 
-    .calendar-day .date {
-      font-weight: bold;
-      margin-bottom: 5px;
-      display: block;
-      font-size: 16px;
-    }
+.calendar-day .date {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+  font-size: 16px;
+}
 
-    .calendar-day .events {
-      margin-top: 10px;
-    }
+.calendar-day .events {
+  margin-top: 10px;
+}
 
-    .event-title {
-      font-weight: bold;
-      font-size: 12px;
-      cursor: pointer;
-      transition: color 0.2s;
-    }
+.event-title {
+  font-weight: bold;
+  font-size: 12px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
 
-    .event-title.blue { color: blue; }
-    .event-title.red { color: red; }
+.event-title.blue { color: blue; }
+.event-title.red { color: red; }
 
-    .event-title:hover {
-      color: #4CAF50;
-    }
+.event-title:hover {
+  color: #4CAF50;
+}
 
-    #taskMagnify {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background-color: rgba(0, 0, 0, 0.7);
-      z-index: 9999;
-      overflow: auto;
-      padding: 20px;
-      box-sizing: border-box;
-      text-align: center;
-    }
+#taskMagnify {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 9999;
+  overflow: auto;
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center;
+}
 
-    #magnifyContent {
-      background-color: #fff;
-      padding: 20px;
-      border: 1px solid #ddd;
-      width: 100%;
-      max-width: 600px;
-      margin: auto;
-      position: relative;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      border-radius: 8px;
-    }
+#magnifyContent {
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ddd;
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
 
-    #magnifyClose {
-      color: #888;
-      position: absolute;
-      top: 10px; right: 10px;
-      font-size: 28px;
-      cursor: pointer;
-      transition: color 0.3s;
-    }
+#magnifyClose {
+  color: #888;
+  position: absolute;
+  top: 10px; right: 10px;
+  font-size: 28px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
 
-    #magnifyClose:hover {
-      color: #555;
-    }
+#magnifyClose:hover {
+  color: #555;
+}
 
-    #magnifyTitle {
-      font-size: 20px;
-      font-weight: bold;
-      margin-bottom: 10px;
-      color: #333;
-    }
+#magnifyTitle {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
 
-    .task-list {
-      margin-top: 20px;
-      text-align: left;
-    }
+.task-list {
+  margin-top: 20px;
+  text-align: left;
+}
 
-    .task-item {
-      margin-bottom: 10px;
-      padding: 10px;
-      background-color: #f2f2f2;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      transition: transform 0.2s;
-      text-align: left;
-    }
+.task-item {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f2f2f2;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+  text-align: left;
+}
 
-    .task-item:hover {
-      transform: scale(1.02);
-    }
+.task-item:hover {
+  transform: scale(1.02);
+}
 
-    .task-info {
-      display: flex;
-      align-items: center;
-      margin-bottom: 5px;
-    }
+.task-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
 
-    .task-time {
-      font-weight: bold;
-      margin-right: 10px;
-      color: #4CAF50;
-    }
+.task-time {
+  font-weight: bold;
+  margin-right: 10px;
+  color: #4CAF50;
+}
 
-    .task-name.blue { color: blue; }
-    .task-name.red { color: red; }
+.task-name.blue { color: blue; }
+.task-name.red { color: red; }
+
   </style>
 </head>
 <body>
 
   <!-- Navigation buttons -->
+
   <nav>
     <button onclick="location.href='page1.html'">Event Entries</button>
     <button onclick="location.href='page2.html'">Daily Tasks</button>
@@ -380,5 +383,6 @@
       renderCalendar();
     });
   </script>
+
 </body>
 </html>
