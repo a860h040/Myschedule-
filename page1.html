@@ -1,42 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact Us</title>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>My Scheduler</title>
+
   <style>
-     body {
-      margin: 0;
-  padding: 0;
-  font-family: 'Arial', sans-serif;
-  background-image: url('bg5.jpg');
-  background-size: cover;           /* Stretch to fill screen */
-  background-repeat: no-repeat;     /* Prevent duplicates */
-  background-position: center;      /* Center image */
-    background-size: cover; /* Don't scale */
-  background-attachment: fixed;
-}
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
       margin: 0;
       padding: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      background-image: url("bg5.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-attachment: fixed;
     }
 
     nav {
-      background-color: rgba(255, 255, 255, 0.9);
-      padding: 10px;
-      text-align: center;
       position: sticky;
       top: 0;
       z-index: 1000;
+      padding: 10px;
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     nav button {
       padding: 10px 20px;
       margin: 5px;
       font-weight: bold;
-      background-color: #4CAF50;
+      font-size: 14px;
       color: white;
+      background-color: #4caf50;
       border: none;
       border-radius: 8px;
       cursor: pointer;
@@ -48,34 +56,52 @@
     }
 
     .container {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      width: 100%;
+      width: calc(100% - 30px);
       max-width: 500px;
-      margin: 80px auto;
+      margin: 70px auto;
+      padding: 25px;
+      background-color: rgba(255, 255, 255, 0.96);
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     }
 
     h4 {
-      margin-bottom: 20px;
-      font-size: 24px;
-      color: #333;
+      margin-top: 0;
+      margin-bottom: 25px;
       text-align: center;
+      font-size: 26px;
+      color: #333;
     }
 
-    input, textarea {
+    label {
+      display: block;
+      margin-top: 12px;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    input {
       width: 100%;
-      padding: 10px;
-      margin: 10px 0;
+      padding: 12px;
+      margin-bottom: 12px;
+      font-size: 16px;
+      font-family: Arial, sans-serif;
       border: 1px solid #ccc;
-      border-radius: 5px;
-      box-sizing: border-box;
+      border-radius: 6px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #4caf50;
+      box-shadow: 0 0 4px rgba(76, 175, 80, 0.4);
     }
 
     input[type="submit"] {
+      margin-top: 15px;
+      color: white;
+      font-weight: bold;
       background-color: #28a745;
-      color: #fff;
       border: none;
       cursor: pointer;
     }
@@ -84,37 +110,201 @@
       background-color: #218838;
     }
 
+    input[type="submit"]:disabled {
+      background-color: #999;
+      cursor: not-allowed;
+    }
+
     .success-message {
-      text-align: center;
-      color: green;
-      font-weight: bold;
+      display: none;
       margin-top: 15px;
+      padding: 12px;
+      text-align: center;
+      color: #155724;
+      font-weight: bold;
+      background-color: #d4edda;
+      border: 1px solid #c3e6cb;
+      border-radius: 6px;
+    }
+
+    .error-message {
+      display: none;
+      margin-top: 15px;
+      padding: 12px;
+      text-align: center;
+      color: #721c24;
+      font-weight: bold;
+      background-color: #f8d7da;
+      border: 1px solid #f5c6cb;
+      border-radius: 6px;
+    }
+
+    @media (max-width: 500px) {
+      nav button {
+        padding: 9px 12px;
+        margin: 3px;
+        font-size: 12px;
+      }
+
+      .container {
+        margin: 40px auto;
+        padding: 20px;
+      }
     }
   </style>
 </head>
+
 <body>
 
-  <!-- Navigation Buttons -->
   <nav>
-    <button onclick="location.href='index.html'">Calendar</button>
-   <button onclick="location.href='page2.html'">Daily Tasks</button>
-    <button onclick="location.href='page3.html'">Clock in/out</button>
+    <button
+      type="button"
+      onclick="location.href='index.html'"
+    >
+      Calendar
+    </button>
+
+    <button
+      type="button"
+      onclick="location.href='page2.html'"
+    >
+      Daily Tasks
+    </button>
+
+    <button
+      type="button"
+      onclick="location.href='page3.html'"
+    >
+      Clock in/out
+    </button>
   </nav>
 
   <div class="container">
-    <form method="post" action="https://script.google.com/macros/s/AKfycbypdyNMt_WT-9vZ_ZXdZpY7q3m10hKj30-Q5mOnjAN5vkukVrDdgg2WK8mJZJCT21K1/exec" name="contact-form" target="hidden_iframe" onsubmit="submitted=true;">
+
+    <form
+      id="contact-form"
+      name="contact-form"
+      method="POST"
+      action="https://script.google.com/macros/s/AKfycbwMsw1RxIOp1xCFmtuQh0c_Qk_I7_d50nvlkWYUSzAHcr3z0nlhIkfostr0B8b-ZOQ/exec"
+      target="hidden_iframe"
+    >
+
       <h4>My Scheduler</h4>
-      <input type="text" name="Event" placeholder="Event" required>
-      <input type="text" name="12" placeholder="Date" required>
-      <textarea name="Time" rows="1" placeholder="Time" required></textarea>
-      <input type="submit" value="Submit" id="submit">
-      <div class="success-message" id="msg" style="display:none;">Form submitted successfully!</div>
+
+      <!-- Required by your Apps Script -->
+      <input
+        type="hidden"
+        name="action"
+        value="post"
+      >
+
+      <label for="event">Event</label>
+
+      <input
+        type="text"
+        id="event"
+        name="Event"
+        placeholder="Enter the event"
+        autocomplete="off"
+        required
+      >
+
+      <label for="date">Date</label>
+
+      <input
+        type="date"
+        id="date"
+        name="Date"
+        required
+      >
+
+      <label for="time">Time</label>
+
+      <input
+        type="time"
+        id="time"
+        name="Time"
+        required
+      >
+
+      <input
+        type="submit"
+        id="submit-button"
+        value="Submit"
+      >
+
+      <div
+        class="success-message"
+        id="success-message"
+      >
+        Entry submitted successfully!
+      </div>
+
+      <div
+        class="error-message"
+        id="error-message"
+      >
+        The entry could not be submitted. Please try again.
+      </div>
+
     </form>
-    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted){document.getElementById('msg').style.display='block'; document.forms['contact-form'].reset(); submitted=false;}"></iframe>
+
+    <iframe
+      name="hidden_iframe"
+      id="hidden_iframe"
+      title="Form submission response"
+      style="display: none;"
+    ></iframe>
+
   </div>
 
   <script>
-    let submitted = false;
+    const form = document.getElementById("contact-form");
+    const hiddenIframe = document.getElementById("hidden_iframe");
+    const submitButton = document.getElementById("submit-button");
+    const successMessage = document.getElementById("success-message");
+    const errorMessage = document.getElementById("error-message");
+
+    let formWasSubmitted = false;
+
+    form.addEventListener("submit", function () {
+      formWasSubmitted = true;
+
+      successMessage.style.display = "none";
+      errorMessage.style.display = "none";
+
+      submitButton.disabled = true;
+      submitButton.value = "Submitting...";
+    });
+
+    hiddenIframe.addEventListener("load", function () {
+      if (!formWasSubmitted) {
+        return;
+      }
+
+      successMessage.style.display = "block";
+
+      form.reset();
+
+      submitButton.disabled = false;
+      submitButton.value = "Submit";
+
+      formWasSubmitted = false;
+
+      setTimeout(function () {
+        successMessage.style.display = "none";
+      }, 5000);
+    });
+
+    // Automatically select today's date.
+    const dateInput = document.getElementById("date");
+    const today = new Date();
+
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+
+    dateInput.value = `${year}-${month}-${day}`;
   </script>
 
 </body>
